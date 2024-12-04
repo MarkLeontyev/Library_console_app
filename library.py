@@ -1,5 +1,6 @@
 import json
 from enum import Enum
+import os
 from typing import List, Dict, Optional
 
 # Путь к файлу с данными
@@ -46,20 +47,27 @@ class Book:
 
 
 class Library:
-    def __init__(self):
+    def __init__(self, data_file: str = DATA_FILE):
+        self.data_file = data_file
+        self.ensure_data_file_exists()
         self.books = self.load_books()
 
-    @staticmethod
-    def load_books() -> List[Book]:
+    def ensure_data_file_exists(self):
+        """Проверяет существование файла данных и создаёт его, если он отсутствует."""
+        if not os.path.exists(self.data_file):
+            with open(self.data_file, "w", encoding="utf-8") as file:
+                json.dump([], file, ensure_ascii=False, indent=4)
+
+    def load_books(self) -> List[Book]:
         try:
-            with open(DATA_FILE, "r", encoding="utf-8") as file:
+            with open(self.data_file, "r", encoding="utf-8") as file:
                 data = json.load(file)
                 return [Book.from_dict(book) for book in data]
         except (FileNotFoundError, json.JSONDecodeError):
             return []
 
     def save_books(self):
-        with open(DATA_FILE, "w", encoding="utf-8") as file:
+        with open(self.data_file, "w", encoding="utf-8") as file:
             json.dump([book.to_dict() for book in self.books], file, ensure_ascii=False, indent=4)
 
     def add_book(self, title: str, author: str, year: int):

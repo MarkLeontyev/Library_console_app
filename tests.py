@@ -9,7 +9,7 @@ class TestLibrary(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Создаём временную библиотеку один раз для всего класса."""
-        cls.library = Library()
+        cls.library = Library(DATA_FILE_FOR_TEST)
         cls.test_data = [
             Book(1, "Преступление и наказание", "Ф. М. Достоевский", 1866),
             Book(2, "Мастер и Маргарита", "М. А. Булгаков", 1940),
@@ -51,9 +51,9 @@ class TestLibrary(unittest.TestCase):
 
     def test_search_books_by_year(self):
         """Тест поиска книги по году."""
-        results = self.library.search_books("1940", "год")
+        results = self.library.search_books("1866", "год")
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].title, "Мастер и Маргарита")
+        self.assertEqual(results[0].title, "Преступление и наказание")
 
     def test_search_books_invalid_field(self):
         """Тест поиска по некорректному полю."""
@@ -69,7 +69,7 @@ class TestLibrary(unittest.TestCase):
     def test_update_status(self):
         """Тест обновления статуса книги."""
         self.assertTrue(self.library.update_status(1, "выдана"))
-        self.assertEqual(self.library.books[0].status, "выдана")
+        self.assertEqual(self.library.books[0].status.value, "выдана")
 
     def test_update_status_invalid(self):
         """Тест обновления статуса несуществующей книги."""
