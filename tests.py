@@ -1,5 +1,6 @@
-import unittest
 import os
+import unittest
+
 from library import Book, Library
 
 DATA_FILE_FOR_TEST = "data/books_test.json"
@@ -82,7 +83,7 @@ class TestLibrary(unittest.TestCase):
     def test_save_and_load_books(self):
         """Тест сохранения и загрузки книг."""
         self.library.save_books()
-        loaded_library = Library()
+        loaded_library = Library(DATA_FILE_FOR_TEST)
         self.assertEqual(len(loaded_library.books), 3)
         self.assertEqual(
             loaded_library.books[0].title, "Преступление и наказание"
