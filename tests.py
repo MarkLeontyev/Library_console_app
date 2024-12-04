@@ -58,7 +58,7 @@ class TestLibrary(unittest.TestCase):
     def test_search_books_invalid_field(self):
         """Тест поиска по некорректному полю."""
         with self.assertRaises(ValueError):
-            self.library.search_books("Тихий Дон", "genre")
+            self.library.search_books("Тихий Дон", "жанр")
 
     def test_list_books(self):
         """Тест получения списка всех книг."""

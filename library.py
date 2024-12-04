@@ -92,7 +92,8 @@ class Library:
         }
         if field not in field_map:
             raise ValueError("Некорректное поле для поиска.")
-        return [book for book in self.books if query.lower() in field_map[field](book).lower()]
+        found_books = [book for book in self.books if query.lower() in field_map[field](book).lower()]
+        return found_books
 
     def list_books(self) -> List[Book]:
         return self.books

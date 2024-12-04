@@ -30,14 +30,15 @@ def main():
                 query = input("Введите значение для поиска: ")
                 results = library.search_books(query, field)
                 if results:
+                    print("\nНайденные книги:")
                     for book in results:
-                        print(book.to_dict())
+                        print(f"ID книги: {book.id}, название: \"{book.title}\" написанная автором: {book.author} в: {book.year} году в данный момент {book.status.value}")
                 else:
                     print("Книги не найдены.")
             elif choice == "4":
                 books = library.list_books()
                 for book in books:
-                    print(book.to_dict())
+                    print(f"ID книги: {book.id}, название: \"{book.title}\" написанная автором: {book.author} в: {book.year} году в данный момент {book.status.value}")
             elif choice == "5":
                 book_id = int(input("Введите ID книги: "))
                 status = input("Введите новый статус (в наличии/выдана): ").strip()
